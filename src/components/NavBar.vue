@@ -10,6 +10,7 @@
 
         <li><a><router-link :to="{name:'Home'}"> Home </router-link></a></li>
         <li><a><router-link :to="{name:'About'}">About</router-link></a></li>
+        <li><a><router-link :to="{name: 'Logout'}">Logout</router-link></a></li>
 
         
       </ul>

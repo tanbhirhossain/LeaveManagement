@@ -24,40 +24,45 @@
     </div>
   </template>
   
+
   <script>
   export default {
     data() {
       return {
         emp_id: '',
         password: ''
-      }
+      };
     },
     methods: {
       async login() {
         try {
-          const response = await fetch('http://116.193.223.197/api/login', {
+          const response = await fetch('http://localhost/OFFICE/HRMBACK/public/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              emp_id: this.emp_id, // Adjusted to match the API field name
+              emp_id: this.emp_id,
               password: this.password
             })
           });
-  
+          
           if (response.ok) {
-            // Login successful, handle success case (redirect to dashboard, etc.)
-            console.log('Login successful');
+            const data = await response.json();
+            localStorage.setItem('userData', JSON.stringify(data.user));
+
+            // Store token in local storage or Vuex store
+            localStorage.setItem('token', data.token);
+            // Redirect to the home page or any other authenticated route
+            this.$router.push('/');
           } else {
-            // Login failed, handle error case (display error message, etc.)
+            // Handle login failure
             console.error('Login failed');
           }
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Login failed', error);
         }
       }
     }
-  }
+  };
   </script>
-  
